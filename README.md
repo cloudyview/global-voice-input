@@ -44,7 +44,7 @@ On first launch, open the tray menu, choose **Settings**, and enter your OpenAI 
 You can also provide the key through an environment variable:
 
 ```powershell
-$env:OPENAI_API_KEY="sk-..."
+$env:OPENAI_API_KEY="<YOUR_OPENAI_API_KEY>"
 npm run start
 ```
 
