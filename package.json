@@ -1,13 +1,35 @@
 {
   "name": "global-voice-input",
   "version": "0.1.0",
-  "private": true,
-  "description": "Windows global push-to-talk voice input utility.",
+  "description": "Desktop-wide push-to-talk voice input for Windows, built with Electron and TypeScript.",
+  "license": "MIT",
+  "author": "cloudyview",
+  "homepage": "https://github.com/cloudyview/global-voice-input#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cloudyview/global-voice-input.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cloudyview/global-voice-input/issues"
+  },
+  "keywords": [
+    "voice-input",
+    "dictation",
+    "asr",
+    "speech-to-text",
+    "electron",
+    "typescript",
+    "windows",
+    "push-to-talk"
+  ],
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/copy-assets.ps1",
     "start": "npm run build && electron .",
     "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",
