@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Global Voice Input</title>
+    <style>
+      body {
+        margin: 0;
+        background: #f6f7f2;
+        color: #162026;
+        font-family: Arial, "Microsoft YaHei", sans-serif;
+      }
+
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 26px 22px 32px;
+      }
+
+      h1 {
+        margin: 0 0 20px;
+        font-size: 24px;
+        line-height: 1.25;
+      }
+
+      .status {
+        min-height: 24px;
+        margin-bottom: 18px;
+        color: #166534;
+        font-size: 14px;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+      }
+
+      label {
+        display: grid;
+        gap: 7px;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      input,
+      select,
+      button {
+        box-sizing: border-box;
+        height: 38px;
+        border: 1px solid #cbd5e1;
+        border-radius: 7px;
+        background: #ffffff;
+        color: #111827;
+        font: inherit;
+      }
+
+      input,
+      select {
+        padding: 0 10px;
+      }
+
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+      }
+
+      .check {
+        grid-template-columns: 18px 1fr;
+        align-items: center;
+        font-weight: 400;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 4px;
+      }
+
+      button {
+        width: fit-content;
+        padding: 0 14px;
+        cursor: pointer;
+      }
+
+      .hint {
+        margin: -8px 0 2px;
+        color: #5f6b76;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Global Voice Input</h1>
+      <div id="status" class="status"></div>
+
+      <form id="settings">
+        <label>
+          录音模式
+          <select id="mode">
+            <option value="toggle">按一下开始录音，再按一下结束并识别</option>
+            <option value="hold">按住录入，抬起结束并识别</option>
+          </select>
+        </label>
+
+        <label>
+          语音快捷键
+          <input id="voiceShortcut" type="text" placeholder="F8">
+        </label>
+        <p class="hint">推荐 F8。按住模式目前最适合 F1-F12、Space、Enter 这类单键。</p>
+
+        <label>
+          确认/回车快捷键
+          <input id="enterShortcut" type="text" placeholder="F9">
+        </label>
+
+        <label>
+          识别语言
+          <select id="language">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="">自动检测</option>
+          </select>
+        </label>
+
+        <label>
+          OpenAI 转写模型
+          <input id="model" type="text" placeholder="gpt-4o-mini-transcribe">
+        </label>
+
+        <label>
+          OpenAI API Key
+          <input id="apiKey" type="password" autocomplete="off" placeholder="也可以用 OPENAI_API_KEY 环境变量">
+        </label>
+        <p class="hint">API Key 会保存在本机 Electron userData 目录的 settings.json 中。</p>
+
+        <label class="check">
+          <input id="autoEnterAfterPaste" type="checkbox">
+          <span>识别并粘贴后自动回车</span>
+        </label>
+
+        <label class="check">
+          <input id="restoreClipboard" type="checkbox">
+          <span>粘贴后恢复原剪贴板文本</span>
+        </label>
+
+        <div class="actions">
+          <button type="submit">保存设置</button>
+          <button id="reset" type="button">恢复默认</button>
+        </div>
+      </form>
+    </main>
+
+    <script src="settings.js"></script>
+  </body>
+</html>
