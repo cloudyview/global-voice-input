@@ -7,6 +7,9 @@ export interface Settings {
   enterShortcut: string;
   language: string;
   model: string;
+  transcriptionBaseUrl: string;
+  apiKeyEnvName: string;
+  envFilePath: string;
   apiKey: string;
   autoEnterAfterPaste: boolean;
   restoreClipboard: boolean;

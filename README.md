@@ -20,6 +20,7 @@ Global Voice Input is a small tray utility that lets you dictate into whichever 
 - Separate confirm key for sending Enter to the active app.
 - Tray-first workflow with a settings window.
 - OpenAI Audio Transcriptions API integration.
+- Configurable OpenAI-compatible transcription endpoint.
 - Clipboard paste strategy for broad compatibility across desktop apps.
 - TypeScript-first codebase with a small Electron surface area.
 
@@ -56,6 +57,8 @@ npm run start
 | Confirm / send Enter | `F9` |
 | Recording mode | Toggle |
 | Transcription model | `gpt-4o-mini-transcribe` |
+| Transcription base URL | `https://api.openai.com/v1` |
+| API key env var | `OPENAI_API_KEY` |
 | Language | `zh` |
 
 ## How It Works
@@ -87,6 +90,31 @@ Open **Settings** from the tray menu to configure:
 
 Settings are stored locally in Electron's `userData` directory.
 
+### Provider Configuration
+
+Global Voice Input can use any provider that exposes an OpenAI-compatible audio transcription endpoint:
+
+```text
+POST {baseUrl}/audio/transcriptions
+```
+
+The settings window supports:
+
+- `ASR model`, for example `gpt-4o-mini-transcribe`.
+- `Transcription base URL`, for example `https://api.openai.com/v1`.
+- `API key env var name`, for example `OPENAI_API_KEY`.
+- `Env file path`, for example `E:\private\openai.env`.
+- `API key override`, useful for temporary local testing only.
+
+Env file values are read at transcription time and are not copied into settings. A simple env file is enough:
+
+```text
+OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+OPENAI_BASE_URL=https://api.openai.com/v1
+```
+
+Not every LLM provider supports ASR. Text-only providers or routers may support chat completions but still fail here unless they provide `/audio/transcriptions`.
+
 ## Privacy and Security
 
 Global Voice Input records only when you trigger the configured voice hotkey. Audio is sent to the configured transcription provider. The current implementation uses OpenAI's Audio Transcriptions API.
@@ -94,6 +122,7 @@ Global Voice Input records only when you trigger the configured voice hotkey. Au
 Important notes:
 
 - API keys are stored locally in plain text settings unless you use `OPENAI_API_KEY`.
+- Env-file keys are read on demand and are not saved back into settings.
 - Recognized text is temporarily written to the system clipboard so it can be pasted into the active app.
 - Clipboard restoration is best effort and currently restores text clipboard content only.
 - Do not dictate secrets unless you are comfortable with your transcription provider and local clipboard behavior.

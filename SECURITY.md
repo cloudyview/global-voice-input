@@ -31,7 +31,8 @@ Instead, contact the maintainer through GitHub and include:
 ## Current Security Notes
 
 - API keys stored through the settings UI are saved locally in plain text.
-- Using `OPENAI_API_KEY` is preferred for users who do not want the key in the settings file.
+- Using an environment variable or env file is preferred for users who do not want the key in the settings file.
+- Env-file values are read at transcription time and are not copied back into settings.
 - Recognized text is temporarily written to the clipboard.
 - Clipboard restoration is best effort and currently handles text clipboard content only.
 - The app does not record unless the configured voice shortcut is triggered.

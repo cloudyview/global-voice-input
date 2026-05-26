@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,11 +9,11 @@
         margin: 0;
         background: #f6f7f2;
         color: #162026;
-        font-family: Arial, "Microsoft YaHei", sans-serif;
+        font-family: Arial, sans-serif;
       }
 
       main {
-        max-width: 720px;
+        max-width: 760px;
         margin: 0 auto;
         padding: 26px 22px 32px;
       }
@@ -90,6 +90,13 @@
         font-size: 13px;
         line-height: 1.45;
       }
+
+      .section {
+        display: grid;
+        gap: 16px;
+        padding-top: 8px;
+        border-top: 1px solid #d9e1e8;
+      }
     </style>
   </head>
   <body>
@@ -99,59 +106,78 @@
 
       <form id="settings">
         <label>
-          录音模式
+          Recording mode
           <select id="mode">
-            <option value="toggle">按一下开始录音，再按一下结束并识别</option>
-            <option value="hold">按住录入，抬起结束并识别</option>
+            <option value="toggle">Toggle: press once to start, press again to transcribe</option>
+            <option value="hold">Hold: hold to record, release to transcribe</option>
           </select>
         </label>
 
         <label>
-          语音快捷键
+          Voice shortcut
           <input id="voiceShortcut" type="text" placeholder="F8">
         </label>
-        <p class="hint">推荐 F8。按住模式目前最适合 F1-F12、Space、Enter 这类单键。</p>
+        <p class="hint">Recommended: F8. Hold mode works best with single keys like F1-F12, Space, or Enter.</p>
 
         <label>
-          确认/回车快捷键
+          Confirm / Enter shortcut
           <input id="enterShortcut" type="text" placeholder="F9">
         </label>
 
         <label>
-          识别语言
+          Recognition language
           <select id="language">
-            <option value="zh">中文</option>
+            <option value="zh">Chinese</option>
             <option value="en">English</option>
-            <option value="ja">日本語</option>
-            <option value="ko">한국어</option>
-            <option value="">自动检测</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+            <option value="">Auto detect</option>
           </select>
         </label>
 
-        <label>
-          OpenAI 转写模型
-          <input id="model" type="text" placeholder="gpt-4o-mini-transcribe">
-        </label>
+        <div class="section">
+          <label>
+            ASR model
+            <input id="model" type="text" placeholder="gpt-4o-mini-transcribe">
+          </label>
 
-        <label>
-          OpenAI API Key
-          <input id="apiKey" type="password" autocomplete="off" placeholder="也可以用 OPENAI_API_KEY 环境变量">
-        </label>
-        <p class="hint">API Key 会保存在本机 Electron userData 目录的 settings.json 中。</p>
+          <label>
+            Transcription base URL
+            <input id="transcriptionBaseUrl" type="url" placeholder="https://api.openai.com/v1">
+          </label>
+          <p class="hint">Must expose an OpenAI-compatible /audio/transcriptions endpoint.</p>
+
+          <label>
+            API key env var name
+            <input id="apiKeyEnvName" type="text" placeholder="OPENAI_API_KEY">
+          </label>
+
+          <label>
+            Env file path
+            <input id="envFilePath" type="text" placeholder="E:\\private\\openai.env">
+          </label>
+          <p class="hint">Optional. Values are read at transcription time and are not copied into settings.</p>
+
+          <label>
+            API key override
+            <input id="apiKey" type="password" autocomplete="off" placeholder="Prefer env vars or an env file">
+          </label>
+          <p class="hint">Only use this for quick local testing. It is stored in local settings if saved.</p>
+        </div>
 
         <label class="check">
           <input id="autoEnterAfterPaste" type="checkbox">
-          <span>识别并粘贴后自动回车</span>
+          <span>Press Enter automatically after pasting recognized text</span>
         </label>
 
         <label class="check">
           <input id="restoreClipboard" type="checkbox">
-          <span>粘贴后恢复原剪贴板文本</span>
+          <span>Restore previous text clipboard after paste</span>
         </label>
 
         <div class="actions">
-          <button type="submit">保存设置</button>
-          <button id="reset" type="button">恢复默认</button>
+          <button type="submit">Save settings</button>
+          <button id="reset" type="button">Restore defaults</button>
         </div>
       </form>
     </main>

@@ -37,7 +37,11 @@ export function normalizeSettings(settings: Partial<Settings>): Settings {
     enterShortcut: settings.enterShortcut?.trim() || DEFAULT_SETTINGS.enterShortcut,
     language: settings.language?.trim() || DEFAULT_SETTINGS.language,
     model: settings.model?.trim() || DEFAULT_SETTINGS.model,
-    apiKey: settings.apiKey?.trim() || process.env.OPENAI_API_KEY || "",
+    transcriptionBaseUrl:
+      settings.transcriptionBaseUrl?.trim() || DEFAULT_SETTINGS.transcriptionBaseUrl,
+    apiKeyEnvName: settings.apiKeyEnvName?.trim() || DEFAULT_SETTINGS.apiKeyEnvName,
+    envFilePath: settings.envFilePath?.trim() || "",
+    apiKey: settings.apiKey?.trim() || "",
     autoEnterAfterPaste: Boolean(settings.autoEnterAfterPaste),
     restoreClipboard: settings.restoreClipboard !== false
   };

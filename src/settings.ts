@@ -10,6 +10,9 @@ const fields = {
   enterShortcut: document.querySelector<HTMLInputElement>("#enterShortcut"),
   language: document.querySelector<HTMLSelectElement>("#language"),
   model: document.querySelector<HTMLInputElement>("#model"),
+  transcriptionBaseUrl: document.querySelector<HTMLInputElement>("#transcriptionBaseUrl"),
+  apiKeyEnvName: document.querySelector<HTMLInputElement>("#apiKeyEnvName"),
+  envFilePath: document.querySelector<HTMLInputElement>("#envFilePath"),
   apiKey: document.querySelector<HTMLInputElement>("#apiKey"),
   autoEnterAfterPaste: document.querySelector<HTMLInputElement>("#autoEnterAfterPaste"),
   restoreClipboard: document.querySelector<HTMLInputElement>("#restoreClipboard"),
@@ -28,7 +31,7 @@ async function init(): Promise<void> {
 
   fields.reset?.addEventListener("click", () => {
     applySettings(DEFAULT_SETTINGS);
-    void saveCurrentSettings("已恢复默认设置");
+    void saveCurrentSettings("Restored default settings.");
   });
 
   window.voiceInput.statusChanged((_event: unknown, message: StatusMessage) => {
@@ -42,6 +45,9 @@ function applySettings(settings: Settings): void {
   setValue(fields.enterShortcut, settings.enterShortcut);
   setValue(fields.language, settings.language);
   setValue(fields.model, settings.model);
+  setValue(fields.transcriptionBaseUrl, settings.transcriptionBaseUrl);
+  setValue(fields.apiKeyEnvName, settings.apiKeyEnvName);
+  setValue(fields.envFilePath, settings.envFilePath);
   setValue(fields.apiKey, settings.apiKey);
 
   if (fields.autoEnterAfterPaste) {
@@ -52,13 +58,17 @@ function applySettings(settings: Settings): void {
   }
 }
 
-async function saveCurrentSettings(successMessage = "设置已保存，快捷键已重新注册"): Promise<void> {
+async function saveCurrentSettings(successMessage = "Settings saved. Shortcuts were re-registered."): Promise<void> {
   const settings: Settings = {
     mode: fields.mode?.value === "hold" ? "hold" : "toggle",
     voiceShortcut: fields.voiceShortcut?.value.trim() || DEFAULT_SETTINGS.voiceShortcut,
     enterShortcut: fields.enterShortcut?.value.trim() || DEFAULT_SETTINGS.enterShortcut,
     language: fields.language?.value ?? DEFAULT_SETTINGS.language,
     model: fields.model?.value.trim() || DEFAULT_SETTINGS.model,
+    transcriptionBaseUrl:
+      fields.transcriptionBaseUrl?.value.trim() || DEFAULT_SETTINGS.transcriptionBaseUrl,
+    apiKeyEnvName: fields.apiKeyEnvName?.value.trim() || DEFAULT_SETTINGS.apiKeyEnvName,
+    envFilePath: fields.envFilePath?.value.trim() || "",
     apiKey: fields.apiKey?.value.trim() || "",
     autoEnterAfterPaste: Boolean(fields.autoEnterAfterPaste?.checked),
     restoreClipboard: fields.restoreClipboard?.checked !== false
