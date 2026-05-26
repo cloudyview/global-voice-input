@@ -42,12 +42,15 @@ npm run start
 
 On first launch, open the tray menu, choose **Settings**, and enter your OpenAI API key.
 
-You can also provide the key through an environment variable:
+Recommended local setup:
 
 ```powershell
-$env:OPENAI_API_KEY="<YOUR_OPENAI_API_KEY>"
+Copy-Item .env.example .env.local
+# Edit .env.local and set OPENAI_API_KEY.
 npm run start
 ```
+
+`.env.local` stays inside the project folder, but it is ignored by git.
 
 ## Default Controls
 
@@ -59,6 +62,7 @@ npm run start
 | Transcription model | `gpt-4o-mini-transcribe` |
 | Transcription base URL | `https://api.openai.com/v1` |
 | API key env var | `OPENAI_API_KEY` |
+| Env file path | `.env.local` |
 | Language | `zh` |
 
 ## How It Works
@@ -103,10 +107,10 @@ The settings window supports:
 - `ASR model`, for example `gpt-4o-mini-transcribe`.
 - `Transcription base URL`, for example `https://api.openai.com/v1`.
 - `API key env var name`, for example `OPENAI_API_KEY`.
-- `Env file path`, for example `E:\private\openai.env`.
+- `Env file path`, defaults to `.env.local` in the project root.
 - `API key override`, useful for temporary local testing only.
 
-Env file values are read at transcription time and are not copied into settings. A simple env file is enough:
+Env file values are read at transcription time and are not copied into settings. Copy `.env.example` to `.env.local`:
 
 ```text
 OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>

@@ -8,7 +8,7 @@ export const DEFAULT_SETTINGS: Settings = {
   model: "gpt-4o-mini-transcribe",
   transcriptionBaseUrl: "https://api.openai.com/v1",
   apiKeyEnvName: "OPENAI_API_KEY",
-  envFilePath: "",
+  envFilePath: ".env.local",
   apiKey: "",
   autoEnterAfterPaste: false,
   restoreClipboard: true

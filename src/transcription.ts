@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 import { Settings } from "./types";
 
 interface TranscriptionResponse {
@@ -93,7 +94,10 @@ function readEnvFile(filePath: string): EnvMap {
   }
 
   try {
-    const raw = fs.readFileSync(filePath, "utf8");
+    const resolvedPath = path.isAbsolute(filePath)
+      ? filePath
+      : path.resolve(process.cwd(), filePath);
+    const raw = fs.readFileSync(resolvedPath, "utf8");
     const env: EnvMap = {};
 
     for (const line of raw.split(/\r?\n/)) {
