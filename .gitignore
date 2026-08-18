@@ -12,3 +12,12 @@ settings.json
 
 Thumbs.db
 Desktop.ini
+
+# AutoSync 收口批次自动追加
+.venv/
+venv/
+__pycache__/
+.DS_Store
+build/
+.next/
+.nuxt/
